@@ -22,7 +22,7 @@
   "onReaction":{"⬅":"onLeft", "➡":"onRight"},
   "defaultEmbed":{
     "description":"Loading Factory...",
-    "footer":{"text":"Robocraft Factory", "icon_url":null}
+    "footer":{"text":"(Unofficial) Robocraft Factory API", "icon_url":null}
   },
   "debug":[]
 }

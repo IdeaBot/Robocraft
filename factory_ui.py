@@ -6,8 +6,9 @@ with open('addons/Robocraft/body.json') as f:
     crf_body = json.load(f)
 
 token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQdWJsaWNJZCI6IjEyMyIsIkRpc3BsYXlOYW1lIjoiVGVzdCIsIlJvYm9jcmFmdE5hbWUiOiJGYWtlQ1JGVXNlciIsIkZsYWdzIjpbXSwiaXNzIjoiRnJlZWphbSIsInN1YiI6IldlYiIsImlhdCI6MTU0NTIyMzczMiwiZXhwIjoyNTQ1MjIzNzkyfQ.ralLmxdMK9rVKPZxGng8luRIdbTflJ4YMJcd25dKlqg"
-avatar_url = "http://images-pull.freejam.netdna-cdn.com/customavatar/Live/"
+avatar_url = "http://images-pull.freejam.netdna-cdn.com/customavatar/Live/" # username goes at end
 
+# maps user terms to API movement constants
 movement_dict = {
     'wheel':100000,
     'hover':200000,
@@ -23,6 +24,7 @@ movement_dict = {
     'propeller':1200000, 'prop':1200000
 }
 
+# maps user terms to API weapon constants
 weapon_dict = {
     'laser':10000000, 'smg':10000000, 'lasor':10000000,
     'plasma':20000000,
@@ -56,9 +58,12 @@ class UI(ui_lib.UI):
 
         # get items
         try:
+            # query robocraft factory list API
             crf_list_req = requests.post("https://factory.robocraftgame.com/api/roboShopItems/list", headers={"Authorization":"Web "+token}, json=self.body)
+            # store results
             self.crf_json = crf_list_req.json()['response']['roboShopItems']
         except:
+            # Change UI to reflect failure
             self.embed.description = 'Failed to contact Robocraft Factory'
             self.update()
             self.page = -1
