@@ -1,0 +1,28 @@
+{
+  "version":{
+    "api":"v0.0.1",
+    "type":"ui-json"
+  },
+  "info":{
+    "name":null,
+    "description":"It's indescribable",
+    "help":"You can't be helped",
+    "package":null,
+    "filepath":"addons/Robocraft/factory_ui.py",
+    "maintainers": [],
+    "owner": "106537989684887552"
+  },
+  "lifespan":-1,
+  "persistence":true,
+  "private":true,
+  "shouldCreate":"shouldCreate",
+  "onCreate":"onCreate",
+  "onDelete":null,
+  "onPersist":null,
+  "onReaction":{"⬅":"onLeft", "➡":"onRight"},
+  "defaultEmbed":{
+    "description":"Loading Factory...",
+    "footer":{"text":"Robocraft Factory", "icon_url":null}
+  },
+  "debug":[]
+}
