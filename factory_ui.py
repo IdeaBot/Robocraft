@@ -75,11 +75,14 @@ class UI(ui_lib.UI):
             # NOTE: I have no idea what the difference is between addedBy and addedByDisplayName
             # I have a leading supsicion that is has something to do with renames, where addedBy is their original name
             # and addedByDisplayName is their current name
-            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url='https://factory.robocraftgame.com/')
+            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedByDisplayName'], url='https://factory.robocraftgame.com/')
             self.embed.description = item['itemDescription']
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
             self.embed.colour=0x3e8ac9
+            # info stuff
+            self.embed.add_field(name='Info', value='CPU: %s\nRanking: %s\nID:`%s`'%(item['cpu'], item['totalRobotRanking'], item['itemId']))
+
             self.update()
         else:
             self.embed.description = 'No results found'
@@ -97,6 +100,8 @@ class UI(ui_lib.UI):
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
             self.embed.colour=0x3e8ac9
+            # info stuff
+            self.embed.set_field_at(0, name='Info', value='CPU: %s\nRanking: %s\nID:`%s`'%(item['cpu'], item['totalRobotRanking'], item['itemId']))
             self.update()
 
     def onRight(self, reaction, user):
@@ -109,6 +114,8 @@ class UI(ui_lib.UI):
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
             self.embed.colour=0x3e8ac9
+            # info stuff
+            self.embed.set_field_at(0, name='Info', value='CPU: %s\nRanking: %s\nID:`%s`'%(item['cpu'], item['totalRobotRanking'], item['itemId']))
             self.update()
 
 
