@@ -1,42 +1,42 @@
-from libs import command, embed
-import json, requests, re
+# Notes, examples and documentation for factory actions
 
-with open('addons/Robocraft/body.json') as f:
-    crf_body = json.load(f)
+from libs import command
+import json, requests
 
 token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQdWJsaWNJZCI6IjEyMyIsIkRpc3BsYXlOYW1lIjoiVGVzdCIsIlJvYm9jcmFmdE5hbWUiOiJGYWtlQ1JGVXNlciIsIkZsYWdzIjpbXSwiaXNzIjoiRnJlZWphbSIsInN1YiI6IldlYiIsImlhdCI6MTU0NTIyMzczMiwiZXhwIjoyNTQ1MjIzNzkyfQ.ralLmxdMK9rVKPZxGng8luRIdbTflJ4YMJcd25dKlqg"
 
-class Command(command.DirectOnlyCommand):
-    def matches(self, message):
-        return False and self.collect_args(message)!=None
+class Command(command.Dummy):
+    '''Robocraft Community Robot Factory on Discord, WOW!
+This is very similar to the fancy new Factory page online:
+<https://factory.robocraftgame.com/>
 
-    def action(self, message):
-        args = self.collect_args(message)
-        body = dict(crf_body) # copy of crf_body
-        # assemble body
-        if args.group(1).lower()=='search':
-            if args.group(2):
-                body['textFilter']=args.group(2).strip()
-        else: # browse chosen
-            body['prependFeaturedRobot']=True
+**Usage**
+```CRF search [<search term>] [<argument>] [<argument>] [...]```
+Where
+**`<search term>`** is the term you'd like to search for
+**`<argument>`** is an argument like `<keyword>=<value>`
+Valid **`<keyword>`**s include:
+`movement`: `<value>` is a single word (eg for Mech Leg, use `mech`)
+`weapon`: `<value>` is a single word (eg for Chain Shredder, use `chain`)
+`maxRR`, `minRR`: `<value>` is an integer
+`maxCPU`, `minCPU`: `<value>` is an integer
 
-        # get items
-        yield from self.send_typing(message.channel)
+**NOTE:** items in between `[` and `]` are optional
+
+**Example**
+`CRF search NGniusness weapon=rail movement=hover`
+'''
+
+    def test(self):
+        '''Example query of the Robocraft CRF API'''
+        with open('addons/Robocraft/body.json') as f:
+            crf_body = json.load(f)
         try:
-            crf_list_req = requests.post("https://factory.robocraftgame.com/api/roboShopItems/list", headers={"Authorization":"Web "+token}, json=body)
+            crf_list_req = requests.post("https://factory.robocraftgame.com/api/roboShopItems/list", headers={"Authorization":"Web "+token}, json=crf_body)
             crf_json = crf_list_req.json()['response']['roboShopItems']
         except:
-            yield from self.send_message(message.channel, 'Failed to contact Robocraft Factory')
             return
-        if len(crf_json)>0:
-            item = crf_json[0]
-            em = embed.create_embed(title='%s of %s: %s'%(crf_json.index(item)+1, len(crf_json),item['itemName']), author={'name':item['addedByDisplayName'], 'icon_url':None, 'url':None}, description=item['itemDescription'], image={'url':item['thumbnail']}, footer={'text':'Robocraft Factory', 'icon_url':None}, colour=0x3e8ac9)
-            yield from self.send_message(message.channel, embed=em)
-        else:
-            yield from self.send_message(message.channel, 'No results found')
-
-    def collect_args(self, message):
-        return re.search(r'CRF\s+(search|browse)(?:\s+(.+))?', message.content, re.I)
+        print(json.dumps(crf_json, indent=4))
 
 ''' Notes
 {
