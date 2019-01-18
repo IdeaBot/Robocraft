@@ -5,7 +5,6 @@ import traceback
 with open('addons/Robocraft/body.json') as f:
     crf_body = json.load(f)
 
-token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQdWJsaWNJZCI6IjEyMyIsIkRpc3BsYXlOYW1lIjoiVGVzdCIsIlJvYm9jcmFmdE5hbWUiOiJGYWtlQ1JGVXNlciIsIkZsYWdzIjpbXSwiaXNzIjoiRnJlZWphbSIsInN1YiI6IldlYiIsImlhdCI6MTU0NTIyMzczMiwiZXhwIjoyNTQ1MjIzNzkyfQ.ralLmxdMK9rVKPZxGng8luRIdbTflJ4YMJcd25dKlqg"
 avatar_url = "http://images-pull.freejam.netdna-cdn.com/customavatar/Live/" # username goes at end
 
 # maps user terms to API movement constants
@@ -38,6 +37,11 @@ weapon_dict = {
     'chain':75000000, 'csh':75000000,
 }
 
+# NOTE: This is a burner account, with no items unlocked
+USERNAME = 'FJAPIC00L'
+EMAIL = 'melon.spoik@gmail.com'
+PASSWORD = 'P4$$w0rd'
+
 class UI(ui_lib.UI):
 
     def shouldCreate(message):
@@ -58,8 +62,11 @@ class UI(ui_lib.UI):
 
         # get items
         try:
+            # do login
+            credentials = fj_login(USERNAME, PASSWORD)
+            print(credentials)
             # query robocraft factory list API
-            crf_list_req = requests.post("https://factory.robocraftgame.com/api/roboShopItems/list", headers={"Authorization":"Web "+token}, json=self.body)
+            crf_list_req = requests.post("https://factory.robocraftgame.com/api/roboShopItems/list", headers={"Authorization":"Web "+credentials['Token']}, json=self.body)
             # store results
             self.crf_json = crf_list_req.json()['response']['roboShopItems']
         except:
@@ -75,7 +82,7 @@ class UI(ui_lib.UI):
             # NOTE: I have no idea what the difference is between addedBy and addedByDisplayName
             # I have a leading supsicion that is has something to do with renames, where addedBy is their original name
             # and addedByDisplayName is their current name
-            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedByDisplayName'], url='https://factory.robocraftgame.com/')
+            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url='https://factory.robocraftgame.com/')
             self.embed.description = item['itemDescription']
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
@@ -117,6 +124,19 @@ class UI(ui_lib.UI):
             # info stuff
             self.embed.set_field_at(0, name='Info', value='CPU: %s\nRanking: %s\nID:`%s`'%(item['cpu'], item['totalRobotRanking'], item['itemId']))
             self.update()
+
+def fj_login(name, password, email_mode=False):
+    if email_mode:
+        url = 'https://account.freejamgames.com/api/authenticate/email/web'
+        body_json = {'EmailAddress':name, 'Password':password}
+        response = requests.post(url, json=body_json)
+    else:
+        url = 'https://account.freejamgames.com/api/authenticate/displayname/web'
+        body_json = {'DisplayName':name, 'Password':password}
+        response = requests.post(url, json=body_json)
+    if response.status_code != 200:
+        print('FJ Auth returned error', response.status_code)
+    return response.json()
 
 
 def collect_args(message):

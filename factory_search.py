@@ -3,7 +3,9 @@
 from libs import command
 import json, requests
 
+# NOTE: token is an old dummy account token stored in the JS code. Proper authentication is shown in login()
 token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJQdWJsaWNJZCI6IjEyMyIsIkRpc3BsYXlOYW1lIjoiVGVzdCIsIlJvYm9jcmFmdE5hbWUiOiJGYWtlQ1JGVXNlciIsIkZsYWdzIjpbXSwiaXNzIjoiRnJlZWphbSIsInN1YiI6IldlYiIsImlhdCI6MTU0NTIyMzczMiwiZXhwIjoyNTQ1MjIzNzkyfQ.ralLmxdMK9rVKPZxGng8luRIdbTflJ4YMJcd25dKlqg"
+
 
 class Command(command.Dummy):
     '''Robocraft Community Robot Factory on Discord, WOW!
@@ -37,6 +39,28 @@ Valid **`<keyword>`**s include:
         except:
             return
         print(json.dumps(crf_json, indent=4))
+
+    def login(self):
+        ''' Example login query '''
+        email = 'email@domain.com'
+        username = 'username'
+        password = 'password'
+        url = 'https://account.freejamgames.com/api/authenticate/email/web'
+        req_json = {'EmailAddress':email, 'Password':password}
+        # NOTE: this can also be DisplayName instead of EmailAddress with a request to https://account.freejamgames.com/api/authenticate/displayname/web
+        auth_response = requests.post(url, json=req_json)
+        return auth_response.json() # you'll need refresh token to refresh, so not just Token is returned
+
+    def refresh(self, token, refresh_token):
+        '''JWT tokens need to be refreshed every so often, using the refresh token
+        provided on login, the public ID (see https://jwt.io/ - it's decoded from the token) (NOT IMPLEMENTED)
+
+        This part is out of scope for this project, but it is partially implemented here for future reference'''
+        url = 'https://account.freejamgames.com/api/authenticate/token/refresh'
+        req_json = {'RefreshToken':refresh_token, 'PublicId':'ToBeDecoded', 'Target':'Web'}
+        ref_response = requests.post(url, json=req_json) # refresh response is similar to the login response
+        return ref_response.json()
+
 
 ''' Notes
 {
