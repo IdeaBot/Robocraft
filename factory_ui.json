@@ -4,9 +4,9 @@
     "type":"ui-json"
   },
   "info":{
-    "name":"Robocraft Factory UI",
+    "name":"Robocraft Factory",
     "description":"Robocraft Community Robot Factory on Discord, WOW!\n  This is very similar to the fancy new Factory page online:\n  <https://factory.robocraftgame.com/>",
-    "help":"**Usage**\n```CRF search [<search term>] [<argument>] [<argument>] [...]```\nWhere\n**`<search term>`** is the term you'd like to search for\n**`<argument>`** is an argument like `<keyword>=<value>`\nValid **`<keyword>`**s include:\n`movement`: `<value>` is a single word (eg for Mech Leg, use `mech`)\n`weapon`: `<value>` is a single word (eg for Chain Shredder, use `chain`)\n`maxRR`, `minRR`: `<value>` is an integer\n`maxCPU`, `minCPU`: `<value>` is an integer\n**NOTE:** items in between\n`[` and `]` are optional\n\n**Example**\n`CRF search NGniusness weapon=rail movement=hover`",
+    "help":"**Usage**\n```CRF search [<search term>] [<argument>] [<argument>] [...]```\nWhere\n**`<search term>`** is the term you'd like to search for\n**`<argument>`** is an argument like `<keyword>=<value>`\nValid **`<keyword>`**s include:\n`movement`: `<value>` is a single word (eg for Mech Leg, use `mech`)\n`weapon`: `<value>` is a single word (eg for Chain Shredder, use `chain`)\n`maxRR`, `minRR`: `<value>` is an integer\n`maxCPU`, `minCPU`: `<value>` is an integer\n\n**NOTE:** items in between`[` and `]` are optional\n\n**Example**\n`CRF search NGniusness weapon=rail movement=hover`",
     "package":null,
     "filepath":"addons/Robocraft/factory_ui.py",
     "maintainers": [],
