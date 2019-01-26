@@ -23,6 +23,5 @@
   "defaultEmbed":{
     "description":"Loading Factory...",
     "footer":{"text":"(Unofficial) Robocraft Factory API", "icon_url":null}
-  },
-  "debug":[]
+  }
 }
