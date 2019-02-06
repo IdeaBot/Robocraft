@@ -9,6 +9,16 @@ clan_url = r'http://images-pull.freejam.netdna-cdn.com/clanavatar/Live/'
 
 
 class Command(command.DirectOnlyCommand):
+    '''Retrieve an avatar from Robocraft
+
+**Usage**
+```@Idea get avatar for <name>```
+Where
+**`<name>`** is the name of the clan/player
+
+**Example**
+`@Idea get avatar for NGniusness` 
+'''
     def matches(self, message):
         return self.collect_args(message) is not None
     
