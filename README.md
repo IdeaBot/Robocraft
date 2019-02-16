@@ -10,10 +10,10 @@ This outlines the functionality of each command.
 Use `@Idea help <command name>` to get usage instructions.
 
 * rc_avatar
-> Retrieves the avatar of a Robocraft player or clan.
+> Retrieve the avatar of a Robocraft player or clan.
 
 * factory_ui
-> Displays robots uploaded to the Community Robot Factory based on search criteria.
+> Display robots uploaded to the Community Robot Factory based on search criteria.
 >
 > This is a UI; use `@Idea help UI factory_ui` for usage instructions.
 
