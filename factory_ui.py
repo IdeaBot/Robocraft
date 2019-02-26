@@ -64,11 +64,12 @@ class UI(ui_lib.UI):
         try:
             # do login
             credentials = fj_login(USERNAME, PASSWORD)
-            print(credentials)
+            # print(credentials)  # debug
             # query robocraft factory list API
             crf_list_req = requests.post("https://factory.robocraftgame.com/api/roboShopItems/list", headers={"Authorization":"Web "+credentials['Token']}, json=self.body)
             # store results
             self.crf_json = crf_list_req.json()['response']['roboShopItems']
+            remove_duplicate_robots(self.crf_json)
         except:
             # Change UI to reflect failure
             self.embed.description = 'Failed to contact Robocraft Factory'
@@ -112,7 +113,7 @@ class UI(ui_lib.UI):
             self.update()
 
     def onRight(self, reaction, user):
-        if self.page!=-1 and self.page-1<len(self.crf_json):
+        if self.page!=-1 and self.page+1<len(self.crf_json):
             self.page+=1
             item = self.crf_json[self.page]
             self.embed.title = '%s of %s: %s'%(self.page+1, len(self.crf_json),item['itemName'])
@@ -141,6 +142,19 @@ def fj_login(name, password, email_mode=False):
 
 def collect_args(message):
     return re.search(r'CRF\s+(search|browse)(?:\s+(.+))?', message.content, re.I)
+
+def remove_duplicate_robots(robots):
+    '''Remove duplicate robots from the API response
+    No idea why duplicates are received in the first place... '''
+    i = 0
+    seen_IDs = list()
+    while (i<len(robots)):
+        if robots[i]['itemId'] in seen_IDs:
+            del(robots[i])
+        else:
+            seen_IDs.append(robots[i]['itemId'])
+            i += 1
+    return robots
 
 def parse_searchquery(query):
     kwargs = dict()
