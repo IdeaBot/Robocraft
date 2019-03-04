@@ -6,6 +6,7 @@ with open('addons/Robocraft/body.json') as f:
     crf_body = json.load(f)
 
 avatar_url = "http://images-pull.freejam.netdna-cdn.com/customavatar/Live/" # username goes at end
+robot_url = "https://factory.robocraftgame.com/robot?id=%s&src=discord"
 
 # maps user terms to API movement constants
 movement_dict = {
@@ -83,7 +84,7 @@ class UI(ui_lib.UI):
             # NOTE: I have no idea what the difference is between addedBy and addedByDisplayName
             # I have a leading supsicion that is has something to do with renames, where addedBy is their original name
             # and addedByDisplayName is their current name
-            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url='https://factory.robocraftgame.com/')
+            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url=robot_url % item['itemId'])
             self.embed.description = item['itemDescription']
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
@@ -103,7 +104,7 @@ class UI(ui_lib.UI):
             self.page-=1
             item = self.crf_json[self.page]
             self.embed.title = '%s of %s: %s'%(self.page+1, len(self.crf_json),item['itemName'])
-            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url='https://factory.robocraftgame.com/')
+            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url=robot_url % item['itemId'])
             self.embed.description = item['itemDescription']
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
@@ -117,7 +118,7 @@ class UI(ui_lib.UI):
             self.page+=1
             item = self.crf_json[self.page]
             self.embed.title = '%s of %s: %s'%(self.page+1, len(self.crf_json),item['itemName'])
-            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url='https://factory.robocraftgame.com/')
+            self.embed.set_author(name=item['addedByDisplayName'], icon_url=avatar_url+item['addedBy'], url=robot_url % item['itemId'])
             self.embed.description = item['itemDescription']
             self.embed.set_image(url=item['thumbnail'])
             # self.embed.set_footer(text='Robocraft Factory')
