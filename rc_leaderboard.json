@@ -1,0 +1,28 @@
+{
+  "version":{
+    "api":"v0.0.1",
+    "type":"ui-json"
+  },
+  "info":{
+    "name":"Robocraft Leaderboard",
+    "description":"Displays top Robocraft players",
+    "help":"**Usage**\n```@Idea view robocraft leaderboard ```",
+    "package":"Robocraft",
+    "filepath":"addons/Robocraft/rc_leaderboard.py",
+    "maintainers": [],
+    "owner": "106537989684887552"
+  },
+  "lifespan":3600,
+  "persistence":false,
+  "private":true,
+  "directOnly":true,
+  "shouldCreate":"shouldCreate",
+  "onCreate":"onCreate",
+  "onDelete":null,
+  "onPersist":null,
+  "onReaction":{"🔼":"onUp", "🔽":"onDown"},
+  "defaultEmbed":{
+    "description":"Loading Leaderboard...",
+    "footer":{"text":"(Unofficial) Robocraft API", "icon_url":null}
+  }
+}
