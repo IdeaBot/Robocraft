@@ -8,7 +8,7 @@
     "description":"Displays top Robocraft players",
     "help":"**Usage**\n```@Idea view robocraft leaderboard ```",
     "package":"Robocraft",
-    "filepath":"addons/Robocraft/rc_leaderboard.py",
+    "filepath":"addons/Robocraft/rctop.py",
     "maintainers": [],
     "owner": "106537989684887552"
   },
